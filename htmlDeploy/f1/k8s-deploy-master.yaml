@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: html-deploy
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      containers:
+      - name: html-deploy-container
+        image: mktfe.azurecr.io/will-be-replaced
+        command: ["rsync", "-avh", "/newData/", "/srcData/"]
+      restartPolicy: Never
+      volumeMounts:
+        - mountPath: "/srcData"
+          name: pvc
+        volumes:
+          - name: pvc
+            persistentVolumeClaim:
+              claimName: az-file-premium-pvc-f1dev-master
