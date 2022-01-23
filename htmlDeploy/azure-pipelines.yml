@@ -41,13 +41,19 @@ steps:
     containers: |
       $(acrUrl)/$(prod)-$(lang):$(branch).$(commitHash).$(buildNumber)
 
-- task: CmdLine@2
-  displayName: wait deploy job to complete
+- task: Kubernetes@1
+  displayName: Wait until Job has finished
   inputs:
-    script: 'kubectl wait --for=condition=complete job/html-deploy-$(prod)-$(lang)-$(branch) --timeout=120s'
-    failOnStderr: true
+    connectionType: 'Kubernetes Service Connection'
+    kubernetesServiceEndpoint: $(k8sServConn)
+    namespace: 'default'
+    command: 'wait'
+    arguments: '--for=condition=complete job/html-deploy-$(prod)-$(lang)-$(branch) --timeout=120s'
 
-- task: CmdLine@2
-  displayName: delete completed job
+- task: Kubernetes@1
   inputs:
-    script: 'kubectl delete job html-deploy-$(prod)-$(lang)-$(branch)'
+    connectionType: 'Kubernetes Service Connection'
+    kubernetesServiceEndpoint: $(k8sServConn)
+    namespace: 'default'
+    command: 'delete'
+    arguments: 'job html-deploy-$(prod)-$(lang)-$(branch)'
