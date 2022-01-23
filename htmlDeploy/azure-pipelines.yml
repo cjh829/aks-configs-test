@@ -51,6 +51,7 @@ steps:
     arguments: '--for=condition=complete job/html-deploy-$(prod)-$(lang)-$(branch) --timeout=120s'
 
 - task: Kubernetes@1
+  displayName: Delete completed job
   inputs:
     connectionType: 'Kubernetes Service Connection'
     kubernetesServiceEndpoint: $(k8sServConn)
