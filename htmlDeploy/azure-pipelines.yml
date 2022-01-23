@@ -10,7 +10,6 @@ variables:
   imagePullSecret: 'imagepullcert'
   k8sServConn: 'MKTFEK8s'
   acrServConn: 'MKTFEACR'
-  acrUrl: 'mktfe.azurecr.io'
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -37,6 +36,6 @@ steps:
       htmlDeploy/$(prod)/k8s-deploy-$(branch).yaml
     imagePullSecrets: |
       $(imagePullSecret)
-    #note the containers should be full url(mktfe.azurecr.io), can not replace to 'MKTFEACR' which will not replace the image source in k8s.yaml
+    #note the containers should be full url(mktfe.azurecr.io), can not replace to 'MKTFEACR'(service connection) or variables which will not replace the image source in k8s.yaml
     containers: |
-      $(acrUrl)/$(prod)-$(lang):$(branch).$(commitHash).$(buildNumber)
+      mktfe.azurecr.io/$(prod)-$(lang):$(branch).$(commitHash).$(buildNumber)
