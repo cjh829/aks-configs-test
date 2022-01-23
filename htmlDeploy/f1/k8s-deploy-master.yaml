@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: html-deploy
+  name: html-deploy-f1-cn-master
 spec:
   backoffLimit: 0
   template:
