@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
       - name: html-deploy-container
-        image: mktfe.azurecr.io/f1-cn
+        image: mktfeacr.azurecr.io/f1-cn
         command: ["rsync", "-avh", "/newData/", "/srcData/"]
         volumeMounts:
           - mountPath: "/srcData"
