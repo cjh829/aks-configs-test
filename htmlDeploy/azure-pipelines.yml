@@ -34,7 +34,7 @@ steps:
     kubernetesServiceConnection: $(k8sServConn)
     namespace: 'default'
     manifests: |
-      htmlDeploy/$(prod)/k8s-deploy-$(branch).yaml
+      htmlDeploy/$(prod)/k8s-deploy-$(lang)-$(branch).yaml
     imagePullSecrets: |
       $(imagePullSecret)
     #note the containers should be full url(mktfeacr.azurecr.io), can not replace to 'MKTFEACR'(service connection) which will not replace the image source in k8s.yaml
