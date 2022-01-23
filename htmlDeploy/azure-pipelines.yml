@@ -40,3 +40,11 @@ steps:
     #note the containers should be full url(mktfeacr.azurecr.io), can not replace to 'MKTFEACR'(service connection) which will not replace the image source in k8s.yaml
     containers: |
       $(acrUrl)/$(prod)-$(lang):$(branch).$(commitHash).$(buildNumber)
+- task: CmdLine@2
+  displayName: wait deploy job to complete
+  inputs:
+    script: 'kubectl wait --for=condition=complete job/html-deploy-$(prod)-$(lang)-$(branch) --timeout=120s'
+    failOnStderr: true
+- task: CmdLine@2
+  inputs:
+    script: 'kubectl delete job html-deploy-$(prod)-$(lang)-$(branch)'
