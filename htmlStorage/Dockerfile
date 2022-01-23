@@ -2,5 +2,5 @@
 FROM alpine:latest
 RUN apk add --no-cache rsync
 RUN mkdir /newData
-ADD htmldata /newData
+ADD htmlData /newData
 RUN chmod +r /newData
